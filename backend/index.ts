@@ -9,24 +9,24 @@ import { UserResolver } from "./src/resolvers/UserResolver";
 
 async function main() {
 
-    /**
-     * Builds the GraphqQL schema using the available Resolvers
-     */
-    const schema = await buildSchema({
-        resolvers: [
-            UserResolver
-        ],
-        emitSchemaFile: path.resolve(__dirname, 'schema.gql')
-    });
+	/**
+	 * Builds the GraphqQL schema using the available Resolvers
+	 */
+	const schema = await buildSchema({
+		resolvers: [
+			UserResolver
+		],
+		emitSchemaFile: path.resolve(__dirname, 'schema.gql')
+	});
 
-    /** Creates the Apollo server to the schema */
-    const server = new ApolloServer({
-        schema
-    });
+	/** Creates the Apollo server to the schema */
+	const server = new ApolloServer({
+		schema
+	});
 
-    const { url } = await server.listen();
+	const { url } = await server.listen();
 
-    console.log(`Server running at ${url}`);
+	console.log(`Server running at ${url}`);
 }
 
 main();
