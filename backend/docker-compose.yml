@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  simpletasks_db:
+    image: mysql:5.6
+    container_name: simpletasks_db
+    restart: always
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: simpletasks_db
+    volumes:
+      - mysql:/var/lib/mysql
+
+  simpletasks_app:
+    build: .
+    container_name: simpletasksapp_backend
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/usr/app
+
+volumes:
+  mysql: {}

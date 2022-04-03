@@ -1,0 +1,15 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "username": "root",
+    "password": "password",
+    "port": 3306,
+    "database": "simpletasks_db",
+    "synchronize": true,
+    "entities": [
+        "./src/models/**/*.ts"
+    ],
+    "migrations": [
+        "./src/migration/**/*.ts"
+    ]
+}
