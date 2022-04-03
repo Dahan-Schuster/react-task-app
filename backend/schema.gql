@@ -3,15 +3,63 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AuthUserInput {
+  password: String!
+  username: String!
+}
+
+type AuthUserResponse {
+  accessToken: String!
+}
+
+input CreateTaskInput {
+  done: Boolean
+  text: String!
+}
+
+input CreateUserInput {
+  password: String!
+  username: String!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type DeleteUserResponse {
+  success: String!
+}
+
 type Mutation {
-  createUser(name: String!): User!
+  authUser(data: AuthUserInput!): AuthUserResponse!
+  createTask(data: CreateTaskInput!): Task!
+  createUser(data: CreateUserInput!): User!
+  deleteTask(id: String!): SuccessResponse!
+  deleteUser: DeleteUserResponse!
+  toggleStatus(id: String!): Task!
 }
 
 type Query {
-  users: [User!]!
+  me: User!
+  tasks: [Task!]!
+}
+
+type SuccessResponse {
+  success: Boolean!
+}
+
+type Task {
+  done: Boolean!
+  id: ID!
+  text: String!
+  user: User!
 }
 
 type User {
+  created_at: DateTime!
   id: ID!
-  name: String!
+  password: String!
+  tasks: [Task!]!
+  username: String!
 }
