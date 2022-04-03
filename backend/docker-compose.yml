@@ -12,6 +12,7 @@ services:
       MYSQL_DATABASE: simpletasks_db
     volumes:
       - mysql:/var/lib/mysql
+    network_mode: host
 
   simpletasks_app:
     build: .
@@ -20,6 +21,7 @@ services:
       - 4000:4000
     volumes:
       - .:/usr/app
+    network_mode: host
 
 volumes:
   mysql: {}

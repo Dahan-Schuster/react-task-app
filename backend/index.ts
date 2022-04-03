@@ -7,6 +7,8 @@ import { buildSchema } from 'type-graphql'
 
 import { UserResolver } from "./src/resolvers/UserResolver";
 
+import './src/database/';
+
 async function main() {
 
 	/**

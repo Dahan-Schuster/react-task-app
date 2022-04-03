@@ -7,9 +7,12 @@
     "database": "simpletasks_db",
     "synchronize": true,
     "entities": [
-        "./src/models/**/*.ts"
+        "./src/models/*.ts"
     ],
+    "cli": {
+        "migrationsDir": "./src/database/migrations/"
+    },
     "migrations": [
-        "./src/migration/**/*.ts"
+        "./src/database/migrations/*.ts"
     ]
 }
