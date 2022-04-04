@@ -16,16 +16,4 @@ export const Container = styled.div`
 		border-radius: 4px;
 		margin-bottom: .5rem;
 	}
-
-	button {
-		background-color: var(--accent-secondary-color);
-		color: #ffffff;
-		text-transform: uppercase;
-		text-align: center;
-		border: none;
-		border-radius: 2px;
-		padding: 0.6rem 1rem;
-		display: block;
-		margin: 0 0 0 auto;
-	}
 `;

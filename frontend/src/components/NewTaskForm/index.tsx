@@ -4,12 +4,21 @@ import { FC, FormEvent, useCallback, useState } from "react";
 import { client } from "../../lib/apollo";
 
 import { CREATE_TASK, GET_TASKS } from "../../queries";
+import Button from "../Button";
 import { Container } from "./styles";
 
-const NewTaskForm: FC = () => {
+interface INewTaskFormProps {
+	currentFilter: boolean | undefined;
+}
+
+const NewTaskForm = ({ currentFilter }: INewTaskFormProps) => {
 	const [createTask, { loading }] = useMutation(CREATE_TASK)
 	const [text, setText] = useState("");
 
+	/**
+	 * Requests the creation of a new task
+	 * and add it to the cache afterwards
+	 */
 	const handleSubmit = useCallback(async (event: FormEvent) => {
 		event.preventDefault();
 
@@ -23,32 +32,50 @@ const NewTaskForm: FC = () => {
 			},
 
 			update: (cache, { data: { createTask } }) => {
-				// get the cache of the last GET_TASKS query made by the client
-				const { tasks } = client.readQuery({ query: GET_TASKS })
-
-				// upates the cache
-				cache.writeQuery({
-					query: GET_TASKS,
-					data: {
-						tasks: [
-							...tasks,
-							createTask,
-						]
-					}
-				})
-
 				// clean the textarea
 				setText("");
+
+				// updates the cache only if the new task
+				// would be shown by the current filter
+				if (currentFilter === createTask.done || currentFilter === undefined) {
+
+					// the variables used in the last query must be
+					// sent in order to distinguish between the filters
+					const currentQueryOptions = {
+						query: GET_TASKS,
+						variables: {
+							completed: currentFilter
+						}
+					}
+
+					// get the cache of the last GET_TASKS query made by the client
+					const cacheData = client.readQuery(currentQueryOptions)
+
+					if (cacheData) {
+						const { tasks } = cacheData;
+
+						// upates the cache
+						cache.writeQuery({
+							...currentQueryOptions,
+							data: {
+								tasks: [
+									...tasks,
+									createTask,
+								]
+							}
+						})
+					}
+				}
 			}
 		})
-	}, [text])
+	}, [text, currentFilter])
 
 	return (
 		<Container>
 			<form onSubmit={handleSubmit}>
 				<textarea disabled={loading} placeholder="Write a new task"
 					onChange={(e) => setText(e.target.value)} value={text}></textarea>
-				<button>Send</button>
+				<Button variant="pink" align="right" title="Send" type="submit" />
 			</form>
 		</Container>
 	)
