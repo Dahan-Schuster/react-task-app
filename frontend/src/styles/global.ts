@@ -32,6 +32,12 @@ const GlobalStyle = createGlobalStyle`
 		background-color: var(--background-color);
 		-webkit-font-smoothing: antialiased;
 		min-height: 100vh;
+
+		#root {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+		}
 	}
 
 	button {

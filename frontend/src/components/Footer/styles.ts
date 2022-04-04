@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.header`
+export const Container = styled.footer`
 	background-color: var(--primary-color);
+	margin-top: auto;
 `;
 
 export const Content = styled.div`
