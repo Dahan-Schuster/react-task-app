@@ -3,6 +3,7 @@ import "reflect-metadata";
 import path from 'path';
 
 import express from "express";
+import cors from "cors";
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql'
 import { ApolloServerLoaderPlugin } from "type-graphql-dataloader";
@@ -48,6 +49,8 @@ async function main() {
 	});
 	await server.start();
 	server.applyMiddleware({ app });
+
+	app.use(cors());
 
 	app.listen(4000, () => {
 		console.log(`Server running at http://localhost:4000/graphql`);

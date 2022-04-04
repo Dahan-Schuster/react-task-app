@@ -10,6 +10,7 @@ input AuthUserInput {
 
 type AuthUserResponse {
   accessToken: String!
+  user: User!
 }
 
 input CreateTaskInput {
@@ -34,7 +35,7 @@ type DeleteUserResponse {
 type Mutation {
   authUser(data: AuthUserInput!): AuthUserResponse!
   createTask(data: CreateTaskInput!): Task!
-  createUser(data: CreateUserInput!): User!
+  createUser(data: CreateUserInput!): AuthUserResponse!
   deleteTask(id: String!): SuccessResponse!
   deleteUser: DeleteUserResponse!
   toggleStatus(id: String!): Task!
