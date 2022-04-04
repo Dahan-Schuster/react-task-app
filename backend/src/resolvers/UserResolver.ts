@@ -15,6 +15,9 @@ import { AuthContext } from "../contexts/AuthContext";
 class AuthUserResponse {
 	@Field()
 	accessToken: string;
+
+	@Field()
+	user: User;
 }
 
 @ObjectType()
@@ -44,7 +47,7 @@ export class UserResolver {
 	 * Creates a new user
 	 * @returns User
 	 */
-	@Mutation(() => User)
+	@Mutation(() => AuthUserResponse)
 	async createUser(
 		@Arg('data') { username, password }: CreateUserInput
 	) {
@@ -52,8 +55,11 @@ export class UserResolver {
 		if (userAlreadyExists)
 			throw new Error('User already exists');
 
-		const user = this.userRepository.create({ username, password })
-		return user;
+		const user = await this.userRepository.create({ username, password })
+		return {
+			user,
+			accessToken: this.generateJWT(user)
+		};
 	}
 
 	@Mutation(() => AuthUserResponse)
@@ -70,13 +76,9 @@ export class UserResolver {
 		if (!passwordMatch)
 			throw new Error('Incorrect username/password');
 
-		if (!process.env.JWT_PRIVATE_KEY)
-			throw new Error('JWT not configured, the authentication has failed');
-
 		return {
-			accessToken: sign({ userId: user.id }, process.env.JWT_PRIVATE_KEY, {
-				expiresIn: "7d",
-			})
+			user,
+			accessToken: this.generateJWT(user)
 		};
 	}
 
@@ -94,4 +96,13 @@ export class UserResolver {
 		};
 	}
 
+
+	private generateJWT(user: User): string {
+		if (!process.env.JWT_PRIVATE_KEY)
+			throw new Error('JWT not configured, the authentication has failed');
+
+		return sign({ userId: user.id }, process.env.JWT_PRIVATE_KEY, {
+			expiresIn: "7d",
+		})
+	}
 }
