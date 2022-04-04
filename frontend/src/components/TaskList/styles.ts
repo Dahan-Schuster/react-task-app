@@ -14,8 +14,8 @@ export const Container = styled.section`
 	}
 
 	@media (max-width: 425px) {
-		width: 100%;
-		margin-right: 0;
+		width: calc(100% - 1rem);
+		margin: 0 auto;
 	}
 `;
 
@@ -29,7 +29,7 @@ export const Content = styled.div`
 	}
 
 	@media (max-width: 425px) {
-		width: calc(100% - 20px);
+		width: 100%;
 	}
 
 	h1 {

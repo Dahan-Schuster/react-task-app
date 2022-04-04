@@ -9,7 +9,6 @@ export const Container = styled.aside`
 		h2 {
 			color: var(--accent-color);
 			font-weight: lighter;
-			text-align: left;
 			font-size: 1.125rem;
 			text-transform: uppercase;
 		}
@@ -19,4 +18,24 @@ export const Container = styled.aside`
 			font-size: 1.5rem;
 		}
 	}
+
+	@media (max-width: 425px) {
+		margin-bottom: 1rem;
+		text-align: center;
+
+		display: flex;
+		justify-content: space-between;
+		align-items:center;
+
+		> div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-direction: column;
+			& + div {
+				margin: 0;
+			}
+		}
+	}
+
 `;
