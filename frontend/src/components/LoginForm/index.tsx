@@ -13,11 +13,15 @@ import Button from "../Button";
 const LoginForm: FC = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+
+	// define submit behavior: { true: login, false: sign up }
 	const [doLogin, setDoLogin] = useState(true);
 
 	const { Login, SignUp, error, loading } = useContext(AuthContext);
 
-
+	/**
+	 * Routes the form submit to the context's Login/Signup methods
+	 */
 	const handleSubmit = useCallback(async (event: FormEvent) => {
 		event.preventDefault();
 		if (doLogin) {
@@ -70,11 +74,8 @@ const LoginForm: FC = () => {
 					)}
 				</div>
 				<div className="form-group">
-					<Button title={doLogin ? 'Login' : 'Signup'}
-						type="submit" variant="pink" styles={{
-							display: "block",
-							margin: "0 0 0 auto",
-						}} />
+					<Button title={doLogin ? 'Login' : 'Signup'} disabled={loading}
+						type="submit" variant="pink" align="right" />
 				</div>
 			</form>
 		</Container>
