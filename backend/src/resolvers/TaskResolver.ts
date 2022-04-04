@@ -13,6 +13,18 @@ class SuccessResponse {
 	success: boolean;
 }
 
+@ObjectType()
+class TaskOverviewResonse {
+	@Field()
+	total: number;
+
+	@Field()
+	done: number;
+
+	@Field()
+	undone: number;
+}
+
 @Resolver()
 export class TaskResolver {
 	private taskRepository: TaskRepository;
@@ -36,10 +48,20 @@ export class TaskResolver {
 			done: completed
 		} as FindConditions<Task>;
 
-		console.log(filters);
-
-
 		return await this.taskRepository.findAllByUser(user, filters);
+	}
+
+	/**
+	 * Returns the user's task quantity overview
+	 * @returns Task[]
+	 */
+	@Query(() => TaskOverviewResonse)
+	@UseMiddleware(isAuth)
+	async tasksTotal(
+		@Ctx() { user }: AuthContext,
+	) {
+		const [total, done, undone] = await this.taskRepository.getTotalByUser(user);
+		return { total, done, undone };
 	}
 
 	/**

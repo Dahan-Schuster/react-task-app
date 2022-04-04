@@ -44,6 +44,7 @@ type Mutation {
 type Query {
   me: User!
   tasks(completed: Boolean): [Task!]!
+  tasksTotal: TaskOverviewResonse!
 }
 
 type SuccessResponse {
@@ -55,6 +56,12 @@ type Task {
   id: ID!
   text: String!
   user: User!
+}
+
+type TaskOverviewResonse {
+  done: Float!
+  total: Float!
+  undone: Float!
 }
 
 type User {

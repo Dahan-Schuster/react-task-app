@@ -25,6 +25,19 @@ export class TaskRepository {
 	}
 
 	/**
+	 * Returns an array of users's tasks totals
+	 * 
+	 * @param user the athenticated user
+	 * @returns [total, done, undone]
+	 */
+	async getTotalByUser(user: User): Promise<number[]> {
+		const done = await this.repository.count({ user: { id: user.id }, done: true });
+		const undone = await this.repository.count({ user: { id: user.id }, done: false });
+
+		return [done + undone, done, undone];
+	}
+
+	/**
 	 * Creates a new task for the user
 	 * 
 	 * @param data the task info
