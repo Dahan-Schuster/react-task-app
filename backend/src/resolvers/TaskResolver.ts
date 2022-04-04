@@ -1,4 +1,5 @@
 import { Arg, Ctx, Field, Mutation, ObjectType, Query, Resolver, UseMiddleware } from "type-graphql";
+import { FindConditions } from "typeorm";
 import { AuthContext } from "../contexts/AuthContext";
 
 import { CreateTaskInput } from "../inputs/CreateTaskInput";
@@ -27,9 +28,18 @@ export class TaskResolver {
 	@Query(() => [Task])
 	@UseMiddleware(isAuth)
 	async tasks(
-		@Ctx() { user }: AuthContext
+		@Ctx() { user }: AuthContext,
+		@Arg('completed', { nullable: true }) completed?: boolean
 	) {
-		return await this.taskRepository.findAllByUser(user);
+		// Can filter by status of completion, or list all tasks
+		const filters = completed === undefined ? undefined : {
+			done: completed
+		} as FindConditions<Task>;
+
+		console.log(filters);
+
+
+		return await this.taskRepository.findAllByUser(user, filters);
 	}
 
 	/**

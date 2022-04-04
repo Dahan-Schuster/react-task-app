@@ -43,7 +43,7 @@ type Mutation {
 
 type Query {
   me: User!
-  tasks: [Task!]!
+  tasks(completed: Boolean): [Task!]!
 }
 
 type SuccessResponse {
