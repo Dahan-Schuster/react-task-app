@@ -4,6 +4,7 @@ import AuthContext from "../../contexts/auth";
 
 import { Container, ImgContainer } from "./styles";
 import logoImg from '../../assets/logo_login.svg';
+import Button from "../Button";
 
 /**
  * User creation form
@@ -19,24 +20,18 @@ const LoginForm: FC = () => {
 
 	const handleSubmit = useCallback(async (event: FormEvent) => {
 		event.preventDefault();
-
-		const handler = doLogin ? handleLogin : handleSignUp;
-		await handler();
-	}, [doLogin]);
-
-	const handleLogin = useCallback(async () => {
-		typeof Login == "function" && await Login({
-			username,
-			password
-		});
-	}, [Login])
-
-	const handleSignUp = useCallback(async () => {
-		typeof SignUp == "function" && await SignUp({
-			username,
-			password
-		});
-	}, [Login])
+		if (doLogin) {
+			typeof Login == "function" && await Login({
+				username,
+				password
+			});
+		} else {
+			typeof SignUp == "function" && await SignUp({
+				username,
+				password
+			});
+		}
+	}, [doLogin, Login, username, password]);
 
 	return (
 		<Container>
@@ -45,10 +40,12 @@ const LoginForm: FC = () => {
 			</ImgContainer>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group">
-					<input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+					<input type="text" value={username} placeholder="Username"
+						onChange={e => setUsername(e.target.value)} />
 				</div>
 				<div className="form-group">
-					<input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+					<input type="password" value={password} placeholder="Password"
+						onChange={e => setPassword(e.target.value)} />
 				</div>
 				{error && (
 					<div className="form-group">
@@ -73,9 +70,11 @@ const LoginForm: FC = () => {
 					)}
 				</div>
 				<div className="form-group">
-					<button disabled={loading} type="submit">
-						{doLogin ? 'Login' : 'Signup'}
-					</button>
+					<Button title={doLogin ? 'Login' : 'Signup'}
+						type="submit" variant="pink" styles={{
+							display: "block",
+							margin: "0 0 0 auto",
+						}} />
 				</div>
 			</form>
 		</Container>

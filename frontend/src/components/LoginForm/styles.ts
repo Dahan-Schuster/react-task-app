@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	max-width: 1120px;
-	margin: 5rem auto;
+	max-width: var(--base-container-width);
+	margin: 0 auto;
 	min-height: 30rem;
 
 
@@ -36,18 +36,6 @@ export const Container = styled.div`
 				color: var(--accent-secondary-color);
 				background-color: transparent;
 				border: none;
-			}
-
-			button[type="submit"] {
-				background-color: var(--accent-secondary-color);
-				color: #ffffff;
-				text-transform: uppercase;
-				text-align: center;
-				border: none;
-				border-radius: 2px;
-				padding: 0.6rem 1rem;
-				display: block;
-				margin: 0 auto;
 			}
 		}
 	}

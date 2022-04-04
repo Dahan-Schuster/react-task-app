@@ -2,24 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
 	background-color: var(--primary-color);
+	margin-bottom: 5rem;
 `;
 
 export const Content = styled.div`
-	max-width: 1120px;
+	max-width: var(--base-container-width);
 	margin: 0 auto;
 	padding: 1rem 3.125rem;
 
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
-	button {
-		background-color: var(--accent-color);
-		color: #ffffff;
-		text-transform: uppercase;
-		text-align: center;
-		border: none;
-		border-radius: 2px;
-		padding: 0.6rem 1rem;
-	}
 `
