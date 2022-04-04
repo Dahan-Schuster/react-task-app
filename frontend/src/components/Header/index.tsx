@@ -1,11 +1,32 @@
-import { FC, useContext } from 'react'
-import logoImg from '../../assets/logo_header.svg'
+import { useMutation } from '@apollo/client'
+import { FC, useCallback, useContext } from 'react'
+
 import AuthContext from '../../contexts/auth'
 import Button from '../Button'
+
+import { DELETE_USER } from '../../queries'
+import logoImg from '../../assets/logo_header.svg'
+
 import { Container, Content } from './styles'
 
 const Header: FC = () => {
 	const { signed, Logout } = useContext(AuthContext);
+	const [deleteUser] = useMutation(DELETE_USER)
+
+	const handleDeleteAccount = useCallback(async () => {
+		if (confirm("Are you sure?")) {
+			await deleteUser({
+				onCompleted: ({ deleteUser }) => {
+
+					if (deleteUser.success === 'true') {
+						Logout();
+					} else {
+						alert('Sorry, something went wrong. Try again.')
+					}
+				}
+			});
+		}
+	}, []);
 
 	return (
 		<Container>
@@ -13,7 +34,10 @@ const Header: FC = () => {
 				<img src={logoImg} alt="Simple Task App" />
 
 				{signed && (
-					<Button title='Logout' onClick={Logout} />
+					<div className='buttonGroup'>
+						<Button title='Logout' onClick={Logout} />
+						<Button title='Delete Account' onClick={handleDeleteAccount} />
+					</div>
 				)}
 			</Content>
 		</Container>

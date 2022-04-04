@@ -13,4 +13,12 @@ export const Content = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	.buttonGroup {
+		display: flex;
+
+		button + button {
+			margin-left: .5rem
+		}
+	}
 `

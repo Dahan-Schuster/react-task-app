@@ -10,6 +10,13 @@ export const CREATE_USER = gql`
 		}
 	}
 `
+export const DELETE_USER = gql`
+	mutation DeleteUser {
+		deleteUser {
+			success
+		}
+	}
+`
 
 export const AUTH_USER = gql`
 	mutation Login($data: AuthUserInput!) {
