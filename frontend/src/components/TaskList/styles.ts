@@ -39,4 +39,15 @@ export const Content = styled.div`
 export const TasksContainer = styled.div`
 	margin-top: 1rem;
 
+	.filterButtonsGroup {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-top: -3rem;
+
+		> button + button {
+			margin-left: .5rem;
+		}
+	}
+
 `
