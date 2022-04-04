@@ -1,15 +1,13 @@
-import Footer from "./components/Footer"
-import Header from "./components/Header"
+import { AuthProvider } from "./contexts/auth"
 import Routes from "./routes"
 import GlobalStyle from "./styles/global"
 
 function App() {
 	return (
-		<>
-			<Header />
+		<AuthProvider>
+			<Routes />
 			<GlobalStyle />
-			<Footer />
-		</>
+		</AuthProvider>
 	)
 }
 
