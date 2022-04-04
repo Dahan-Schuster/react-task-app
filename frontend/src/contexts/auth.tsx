@@ -1,8 +1,7 @@
 import { ApolloError, MutationResult, useMutation } from '@apollo/client';
 import React, { createContext, useEffect, useState } from 'react';
+import { lstoragePrefix } from '../App';
 import { AUTH_USER, CREATE_USER } from '../queries';
-
-const lsPrefix = '@SimpleTaskApp';
 
 interface AuthUserInput {
 	username: string;
@@ -38,11 +37,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 
 	function updateAuthUser({ accessToken, user }: IAuthUserResponse) {
-		setToken(accessToken);
-		setUsername(user.username);
+		if (accessToken && !!user.username) {
+			setToken(accessToken);
+			setUsername(user.username);
 
-		localStorage.setItem(`${lsPrefix}:token`, accessToken);
-		localStorage.setItem(`${lsPrefix}:username`, user.username);
+			localStorage.setItem(`${lstoragePrefix}:token`, accessToken);
+			localStorage.setItem(`${lstoragePrefix}:username`, user.username); x
+		}
 	}
 
 	async function Login({ username, password }: AuthUserInput): Promise<void> {
@@ -82,7 +83,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 				}
 			},
 			onCompleted: ({ createUser }) => {
-				console.log(createUser);
 				updateAuthUser(createUser);
 				setLoading(false);
 				setError('');
@@ -96,13 +96,17 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 	function Logout(): void {
 		setToken("");
-		localStorage.removeItem(`${lsPrefix}:token`);
+		localStorage.removeItem(`${lstoragePrefix}:token`);
+		localStorage.removeItem(`${lstoragePrefix}:username`);
+		localStorage.removeItem(`${lstoragePrefix}:filter`);
 	}
 
 	useEffect(() => {
-		const storagedToken = localStorage.getItem(`${lsPrefix}:token`);
-		if (storagedToken) {
+		const storagedToken = localStorage.getItem(`${lstoragePrefix}:token`);
+		const storagedUsername = localStorage.getItem(`${lstoragePrefix}:username`);
+		if (storagedToken && storagedUsername) {
 			setToken(storagedToken);
+			setUsername(storagedUsername);
 		}
 	}, []);
 
