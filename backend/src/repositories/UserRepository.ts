@@ -54,15 +54,10 @@ export class UserRepository {
 	/**
 	 * Deletes an user by it's ID
 	 * 
-	 * @param id 
+	 * @param user the user to be deleted
 	 * @returns the deletion success status
 	 */
-	async delete(id: string): Promise<boolean> {
-		try {
-			await this.repository.delete({ id });
-			return true;
-		} catch (e) {
-			return false;
-		}
+	async delete(user: User): Promise<void> {
+		await this.repository.delete({ id: user.id });
 	}
 }

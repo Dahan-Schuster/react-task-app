@@ -9,6 +9,7 @@ import { AuthUserInput } from "../inputs/AuthUserInput";
 import { User } from "../models/User";
 import { isAuth } from "../middlewares/isAuth";
 import { AuthContext } from "../contexts/AuthContext";
+import { TaskRepository } from "../repositories/TaskRepository";
 
 
 @ObjectType()
@@ -29,9 +30,12 @@ class DeleteUserResponse {
 @Resolver()
 export class UserResolver {
 	private userRepository: UserRepository;
+	private taskRepository: TaskRepository;
+
 
 	constructor() {
 		this.userRepository = new UserRepository();
+		this.taskRepository = new TaskRepository();
 	}
 
 	/**
@@ -91,9 +95,14 @@ export class UserResolver {
 	async deleteUser(
 		@Ctx() { user }: AuthContext
 	) {
-		return {
-			success: await this.userRepository.delete(user.id)
-		};
+		try {
+			await this.taskRepository.deleteAllFromUser(user);
+			await this.userRepository.delete(user);
+
+			return { success: true };
+		} catch (e) {
+			return { success: false };
+		}
 	}
 
 

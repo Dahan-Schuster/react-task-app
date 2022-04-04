@@ -88,9 +88,12 @@ export class TaskResolver {
 		@Arg('id') id: string,
 		@Ctx() { user }: AuthContext
 	) {
-		return {
-			success: await this.taskRepository.deleteFromUser(id, user)
-		};
+		try {
+			await this.taskRepository.deleteFromUser(id, user)
+			return { success: true };
+		} catch (e) {
+			return { success: false };
+		}
 	}
 
 	/**

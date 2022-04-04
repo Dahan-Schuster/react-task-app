@@ -77,20 +77,25 @@ export class TaskRepository {
 	 * 
 	 * @param id the task id
 	 * @param user the authenticated user
-	 * @returns the deletion result
 	 */
-	async deleteFromUser(id: string, user: User): Promise<boolean> {
-		try {
-			await this.repository.delete({
-				user: { id: user.id },
-				id,
-			});
-
-			return true;
-		} catch (e) {
-			return false;
-		}
+	async deleteFromUser(id: string, user: User): Promise<void> {
+		await this.repository.delete({
+			user: { id: user.id },
+			id,
+		});
 	}
+
+	/**
+	 * Deletes all tasks from an user
+	 * 
+	 * @param user the authenticated user
+	 */
+	async deleteAllFromUser(user: User): Promise<void> {
+		await this.repository.delete({
+			user: { id: user.id }
+		})
+	}
+
 
 	/**
 	 * Inverts a task's status (done/undone)
