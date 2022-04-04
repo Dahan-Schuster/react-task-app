@@ -40,6 +40,15 @@ export const GET_TASKS = gql`
 		}
 	}
 `
+export const GET_TASKS_TOTALS = gql`
+	query TasksTotals {
+		tasksTotal {
+			total
+			done
+			undone
+		}
+	}
+`
 
 export const TOGGLE_TASK = gql`
 	mutation ToggleTask($taskId: String!) {
