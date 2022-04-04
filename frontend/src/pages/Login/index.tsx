@@ -5,7 +5,6 @@ import LoginForm from "../../components/LoginForm"
 import AuthContext from "../../contexts/auth"
 
 export const Login: FC = () => {
-	const { signed } = useContext(AuthContext);
 
 	return (
 		<>
