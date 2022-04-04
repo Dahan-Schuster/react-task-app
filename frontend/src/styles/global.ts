@@ -6,6 +6,8 @@ const GlobalStyle = createGlobalStyle`
 		--primary-color: #23AAAA;
 		--secondary-color: #97D1D0;
 		--accent-color: #FEB708;
+		--accent-secondary-color: #f15786;
+		--error-color: #ee2d68;
 
 		--f14-px: 87.50%;
 		--f15-px: 93.75%;

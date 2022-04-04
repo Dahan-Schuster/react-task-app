@@ -1,6 +1,9 @@
 import { FC, FormEvent, useCallback, useContext, useState } from "react";
+
 import AuthContext from "../../contexts/auth";
-import { Container } from "./styles";
+
+import { Container, ImgContainer } from "./styles";
+import logoImg from '../../assets/logo_login.svg';
 
 /**
  * User creation form
@@ -37,6 +40,9 @@ const LoginForm: FC = () => {
 
 	return (
 		<Container>
+			<ImgContainer>
+				<img src={logoImg} alt="Simple Task App" />
+			</ImgContainer>
 			<form onSubmit={handleSubmit}>
 				<div className="form-group">
 					<input type="text" value={username} onChange={e => setUsername(e.target.value)} />
@@ -46,24 +52,24 @@ const LoginForm: FC = () => {
 				</div>
 				{error && (
 					<div className="form-group">
-						<p className="error">{error}</p>
+						<small className="error">{error}</small>
 					</div>
 				)}
 				<div className="form-group">
 					{doLogin ? (
-						<p>Don't have an account?
+						<small>Don't have an account?&nbsp;
 							<button className="btnAccount" type="button"
 								onClick={() => setDoLogin(false)}>
 								Sign Up
 							</button>
-						</p>
+						</small>
 					) : (
-						<p>Already have an account?
+						<small>Already have an account?&nbsp;
 							<button className="btnAccount" type="button"
 								onClick={() => setDoLogin(true)}>
 								Log in
 							</button>
-						</p>
+						</small>
 					)}
 				</div>
 				<div className="form-group">
