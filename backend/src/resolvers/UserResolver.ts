@@ -87,7 +87,7 @@ export class UserResolver {
 	}
 
 	/**
-	 * Deletes an authenticated user's task by id
+	 * Deletes the authenticated user's account and it's tasks
 	 * @returns Task
 	 */
 	@Mutation(() => DeleteUserResponse)
