@@ -14,6 +14,9 @@ npm i			# install all dependencies
 docker-compose up -d	# run the MySQL and Node.js containers
 ```
 
+You will also need to add a JWT private key to your .env file. The env-template shows the correct variables you need to fill.
+Just create a md5 hash with a string of your preference, and set it as the value of the JWT_PRIVATE_KEY environment variable.
+
 To execute the frontend server and access it in http://localhost:3000, run:
 
 ```bash
